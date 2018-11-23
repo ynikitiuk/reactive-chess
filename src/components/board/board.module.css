@@ -1,0 +1,11 @@
+.board-container {
+    width: 40%;
+    margin: 30px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 660px) {
+    .board-container {
+        width: 100%;
+    }
+}
