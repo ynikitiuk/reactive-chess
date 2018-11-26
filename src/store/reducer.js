@@ -1,6 +1,7 @@
 import { initializeBoard } from '../utils/initializeBoard'
 
 const initialState = initializeBoard();
+console.log(initialState);
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,7 +37,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         board: updatedBoard,
         selectedSquare: null,
-        taken: updatedTaken
+        taken: updatedTaken,
+        whiteMove: !state.whiteMove
       };
     default:
       return state;

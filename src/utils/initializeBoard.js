@@ -47,7 +47,8 @@ export const initializeBoard = () => {
     taken: {
       black: [],
       white: []
-    }
+    },
+    whiteMove: true
   };
 
   for (let j = 8; j >= 1; j--) {

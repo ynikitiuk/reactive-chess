@@ -1,0 +1,13 @@
+.current {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 0.5em;
+}
+
+.current-black {
+  background-color: black;
+}
+
+.current-white {
+  background-color: white;
+}
