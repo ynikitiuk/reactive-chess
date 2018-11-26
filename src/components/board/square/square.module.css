@@ -3,14 +3,23 @@
     background-repeat: no-repeat;
     background-size: cover;
     display: inline-block;
+    box-sizing: border-box;
 }
 
 .square-light {
-    background-color: hsl(100, 100%, 35%)
+    background-color: hsl(100, 100%, 45%)
 }
 
 .square-dark {
-    background-color: hsl(100, 100%, 45%)
+    background-color: hsl(100, 100%, 35%)
+}
+
+.square-selected {
+    background-color: hsl(100, 100%, 25%)
+}
+
+.square:focus {
+    background-color: hsl(100, 100%, 25%)
 }
 
 .square:before {

@@ -1,6 +1,7 @@
 export default class Piece {
-  constructor(color, url) {
+  constructor(color, url, name) {
     this.player = color;
-    this.backgroundUrl = url;
+    this.image = url;
+    this.name = name;
   }
 }
