@@ -23,6 +23,7 @@ const board = ({board, selected, clicked}) => {
           id={square.id}
           figure={square.figure}
           color={square.color}
+          selected={selected === square.id}
           clicked={() => clicked(square.id, selected)}
         />)}
     </div>
@@ -42,7 +43,7 @@ const mapDispatchToProps = dispatch => {
       if (selected) {
         dispatch({type: 'MOVE', from: selected, to: square})
       } else {
-        dispatch({type: 'CLICK', id: square})
+        dispatch({type: 'SELECT', id: square})
       }
     }
   }

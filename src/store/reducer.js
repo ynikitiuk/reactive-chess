@@ -4,7 +4,7 @@ const initialState = initializeBoard();
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CLICK':
+    case 'SELECT':
       const selectedPiece = state.board[action.id].figure ? action.id : null;
       return {
         ...state,
