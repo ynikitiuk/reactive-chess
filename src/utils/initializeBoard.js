@@ -42,8 +42,12 @@ export const initializeBoard = () => {
   };
 
   const initialState = {
+    board: {},
     selectedSquare: null,
-    board: {}
+    taken: {
+      black: [],
+      white: []
+    }
   };
 
   for (let j = 8; j >= 1; j--) {

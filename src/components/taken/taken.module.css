@@ -1,0 +1,20 @@
+.taken-container {
+    width: 50%;
+    margin: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.taken-block {
+    width: 100%;
+    border: 2px solid dodgerblue;
+    border-radius: 25px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 660px) {
+    .taken-container {
+        width: 100%;
+    }
+}

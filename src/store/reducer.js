@@ -26,10 +26,17 @@ const reducer = (state = initialState, action) => {
         [action.from]: updatedSquareFrom,
         [action.to]: updatedSquareTo
       };
+      const updatedTaken = state.board[action.to].figure ?
+        {
+          ...state.taken,
+          [state.board[action.to].player]: [...state.taken[state.board[action.to].player], state.board[action.to].figure]
+        } :
+        state.taken;
       return {
         ...state,
         board: updatedBoard,
-        selectedSquare: null
+        selectedSquare: null,
+        taken: updatedTaken
       };
     default:
       return state;
