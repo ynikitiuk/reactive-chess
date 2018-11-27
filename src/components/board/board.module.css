@@ -1,7 +1,7 @@
 .board-container {
-    width: 40%;
-    margin: 0 30px;
+    width: 100%;
     box-sizing: border-box;
+    border: 2px solid dodgerblue;
 }
 
 @media (max-width: 660px) {

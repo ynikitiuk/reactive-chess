@@ -44,6 +44,7 @@ export const initializeBoard = () => {
   const initialState = {
     board: {},
     selectedSquare: null,
+    allowedMoves: [],
     taken: {
       black: [],
       white: []

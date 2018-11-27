@@ -7,18 +7,14 @@
 }
 
 .square-light {
-    background-color: hsl(100, 100%, 45%)
+    background-color: sandybrown;
 }
 
 .square-dark {
-    background-color: hsl(100, 100%, 35%)
+    background-color: saddlebrown;
 }
 
 .square-selected {
-    background-color: hsl(100, 100%, 25%)
-}
-
-.square:focus {
     background-color: hsl(100, 100%, 25%)
 }
 

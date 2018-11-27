@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 
 import Board from './components/board/board';
-import TakenPieces from './components/taken/taken';
 import Current from './components/current/current';
+import TakenPieces from "./components/taken/taken";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Board />
+      <div className={classes['App']}>
+        <div className={classes['field']}>
+          <TakenPieces player='white'/>
+          <Board />
+          <TakenPieces player='black'/>
+        </div>
         <Current />
-        <TakenPieces />
+        {/*<History />*/}
       </div>
     );
   }

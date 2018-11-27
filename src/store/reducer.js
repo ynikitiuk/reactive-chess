@@ -1,4 +1,7 @@
 import { initializeBoard } from '../utils/initializeBoard'
+import { selectionIsAllowed } from '../utils/selectionIsAllowed'
+import { moveIsAllowed } from '../utils/moveIsAllowed'
+import { allowedMoves } from '../utils/allowedMoves'
 
 const initialState = initializeBoard();
 console.log(initialState);
@@ -6,12 +9,15 @@ console.log(initialState);
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SELECT':
-      const selectedPiece = state.board[action.id].figure ? action.id : null;
+      const selectedPiece = selectionIsAllowed(state, action.id) ? action.id : null;
       return {
         ...state,
-        selectedSquare: selectedPiece
+        selectedSquare: selectedPiece,
+        allowedMoves: allowedMoves(selectedPiece)
       };
     case 'MOVE':
+      if (!moveIsAllowed(state, action.from, action.to)) return state;
+
       const updatedSquareFrom = {
         ...state.board[action.from],
         figure: null,
@@ -37,6 +43,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         board: updatedBoard,
         selectedSquare: null,
+        allowedMoves: [],
         taken: updatedTaken,
         whiteMove: !state.whiteMove
       };

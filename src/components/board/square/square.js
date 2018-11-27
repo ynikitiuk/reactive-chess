@@ -2,12 +2,9 @@ import React from 'react';
 
 import classes from './square.module.css';
 
-const square = ({figure, color, id, clicked, selected}) => {
+const square = ({figure, color, id, clicked, selected, allowed}) => {
   const url = figure ? `url(${figure.image})` : 'none';
-  const classesArr = [classes['square']];
-  if (color) classesArr.push(classes[`square-${color}`]);
-  if (selected) classesArr.push(classes[`square-selected`]);
-
+  const classesArr = [classes['square'], classes[`square-${selected || allowed ? 'selected' : color}`]];
 
   return <div
     className={classesArr.join(' ')}

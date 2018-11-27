@@ -1,39 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './board.module.css';
 import { connect } from  'react-redux';
 
 import Square from './square/square';
 
-const board = ({board, selected, clicked}) => {
-  console.log(board);
-  const squares = [];
-  for (let key in board) {
-    squares.push({
-      id: key,
-      figure: board[key].figure,
-      color: board[key].color
-    })
-  }
+class Board extends Component {
+  render() {
+    const {board, selected, allowed, clicked} = this.props;
+    const squares = [];
+    for (let key in board) {
+      squares.push({
+        id: key,
+        figure: board[key].figure,
+        color: board[key].color
+      })
+    }
 
-  return (
-    <div className={classes['board-container']}>
-      {squares.map(square =>
-        <Square
-          key={square.id}
-          id={square.id}
-          figure={square.figure}
-          color={square.color}
-          selected={selected === square.id}
-          clicked={() => clicked(square.id, selected)}
-        />)}
-    </div>
-  )
-};
+    return (
+      <div className={classes['board-container']}>
+        {squares.map(square =>
+          <Square
+            key={square.id}
+            id={square.id}
+            figure={square.figure}
+            color={square.color}
+            selected={selected === square.id}
+            allowed={allowed.includes(square.id)}
+            clicked={() => clicked(square.id, selected)}
+          />)}
+      </div>
+    )
+  }
+}
 
 const mapStateToProps = state => {
   return {
     board: state.board,
-    selected: state.selectedSquare
+    selected: state.selectedSquare,
+    allowed: state.allowedMoves
   }
 };
 
@@ -49,4 +53,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(board);
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

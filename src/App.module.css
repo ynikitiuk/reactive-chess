@@ -14,3 +14,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.field {
+  width: 40%;
+  margin: 0 30px;
+}

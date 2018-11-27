@@ -1,16 +1,26 @@
-.taken-container {
-    width: 50%;
-    margin: 30px;
-    box-sizing: border-box;
+.taken {
+    width: 90%;
     display: flex;
-    flex-direction: column;
+    margin: auto;
+    border: 2px solid dodgerblue;
+    background-color: sandybrown;
+    box-sizing: border-box;
 }
 
-.taken-block {
-    width: 100%;
-    border: 2px solid dodgerblue;
-    border-radius: 25px;
-    margin-bottom: 15px;
+.taken:before {
+    content: "";
+    display: inline-block;
+    padding-top: 10%;
+}
+
+.taken-white {
+    border-radius: 25px 25px 0 0;
+    border-bottom: none;
+}
+
+.taken-black {
+    border-radius: 0 0 25px 25px;
+    border-top: none;
 }
 
 @media (max-width: 660px) {

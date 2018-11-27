@@ -4,19 +4,16 @@ import { connect } from  'react-redux';
 import classes from './taken.module.css';
 import Square from '../board/square/square';
 
-const takenPieces = ({black, white}) => {
-  const blackBlock = black.length ?
-    <div className={classes['taken-block']}>{black.map((piece, index) => <Square figure={piece} key={index} />)}</div> :
-    null;
-  const whiteBlock = white.length ?
-    <div className={classes['taken-block']}>{white.map((piece, index) => <Square figure={piece} key={index} />)}</div> :
+const takenPieces = ({player, taken}) => {
+  const classesArr = [classes['taken'], classes[`taken-${player}`]];
+  const elements = taken[player].length ?
+    taken[player].map((piece, index) => <Square figure={piece} key={index} style={{width: '5%'}}/>) :
     null;
 
   return (
     <>
-      <div className={classes['taken-container']}>
-        {blackBlock}
-        {whiteBlock}
+      <div className={classesArr.join(' ')}>
+        {elements}
       </div>
     </>
   )
@@ -24,7 +21,7 @@ const takenPieces = ({black, white}) => {
 
 const mapStateToProps = state => {
   return {
-    black: state.taken.black,
+    taken: state.taken,
     white: state.taken.white
   }
 };
