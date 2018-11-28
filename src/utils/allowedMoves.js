@@ -1,4 +1,5 @@
-export const allowedMoves = (id) => {
-  // Dummy response
-  return id ? ['d4', 'd5', 'd6'] : [];
+import { mapIndicesToKeys } from './mapIndicesToKeys';
+
+export const allowedMoves = (board, id) => {
+  return id ? mapIndicesToKeys(board[id].figure.getAllowedMoves(board, id)) : [];
 };

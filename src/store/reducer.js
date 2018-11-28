@@ -13,10 +13,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedSquare: selectedPiece,
-        allowedMoves: allowedMoves(selectedPiece)
+        allowedMoves: allowedMoves(state.board, selectedPiece)
+      };
+    case 'DESELECT':
+      return {
+        ...state,
+        selectedSquare: null,
+        allowedMoves: []
       };
     case 'MOVE':
       if (!moveIsAllowed(state, action.from, action.to)) return state;
+      state.board[action.from].figure.firstMove = false;
 
       const updatedSquareFrom = {
         ...state.board[action.from],
@@ -39,6 +46,7 @@ const reducer = (state = initialState, action) => {
           [state.board[action.to].player]: [...state.taken[state.board[action.to].player], state.board[action.to].figure]
         } :
         state.taken;
+      console.log(updatedBoard);
       return {
         ...state,
         board: updatedBoard,

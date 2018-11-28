@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 
 import Board from './components/board/board';
-import Current from './components/current/current';
-import TakenPieces from "./components/taken/taken";
+import Current from './components/currentPlayer/currentPlayer';
+import TakenPieces from "./components/takenPieces/takenPieces";
 
 class App extends Component {
   render() {

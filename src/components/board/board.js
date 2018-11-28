@@ -45,6 +45,8 @@ const mapDispatchToProps = dispatch => {
   return {
     clicked: (square, selected) => {
       if (selected) {
+        selected === square ?
+        dispatch({type: 'DESELECT'}) :
         dispatch({type: 'MOVE', from: selected, to: square})
       } else {
         dispatch({type: 'SELECT', id: square})

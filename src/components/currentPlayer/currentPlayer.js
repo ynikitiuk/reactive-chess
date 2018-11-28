@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import classes from './current.module.css';
+import classes from './currentPlayer.module.css';
 
-const current = ({whiteMove}) => {
+const currentPlayer = ({whiteMove}) => {
   console.log(whiteMove);
   const classesArr = [classes['current'], classes[`current-${whiteMove ? 'white' : 'black'}`]];
   return (
@@ -19,4 +19,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(current);
+export default connect(mapStateToProps)(currentPlayer);

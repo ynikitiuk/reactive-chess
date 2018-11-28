@@ -10,7 +10,7 @@ const square = ({figure, color, id, clicked, selected, allowed}) => {
     className={classesArr.join(' ')}
     style={{backgroundImage: url}}
     onClick={clicked}
-  >{id}</div>
+  >{id}, {(8 - id[1])* 8 + id[0].charCodeAt(0) - 97}</div>
 };
 
 export default square;

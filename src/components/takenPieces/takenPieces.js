@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from  'react-redux';
 
-import classes from './taken.module.css';
+import classes from './takenPieces.module.css';
 import Square from '../board/square/square';
 
 const takenPieces = ({player, taken}) => {
