@@ -1,5 +1,5 @@
 import Piece from './piece';
-import { mapKeyToIndices } from "../../utils/mapIndicesToKeys";
+import { mapIndicesToKey, mapKeyToIndices } from "../../utils/mapIndicesToKeys";
 
 export default class Pawn extends Piece {
   constructor(color) {
@@ -12,8 +12,13 @@ export default class Pawn extends Piece {
   getAllowedMoves(board, id) {
     const [i, j] = mapKeyToIndices(id);
     const direction = this.player === 'black' ? 1 : -1;
-    return this.firstMove ?
+    const sides = [[i + direction, j - 1], [i + direction, j + 1]]
+      .filter(el => (el[0] >= 0 && el[0] <= 7 && el[1] >= 0 && el[1] <= 7))
+      .filter(el => !!board[mapIndicesToKey(el)].figure);
+    const forward = board[mapIndicesToKey([i + direction, j])].figure? [] : (this.firstMove ?
       [[i + direction, j], [i + 2*direction, j]] :
-      [[i + direction, j]];
+      [[i + direction, j]]);
+
+    return [...sides, ...forward];
   }
 }

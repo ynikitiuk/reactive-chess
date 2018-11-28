@@ -1,5 +1,5 @@
 import Piece from './piece';
-import { mapKeyToIndices } from '../../utils/mapIndicesToKeys';
+import { cropSequence, mapKeyToIndices } from '../../utils/mapIndicesToKeys';
 
 export default class Rook extends Piece {
   constructor(color) {
@@ -12,9 +12,10 @@ export default class Rook extends Piece {
   getAllowedMoves(board, id) {
     const [i, j] = mapKeyToIndices(id);
     const row = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]
-    .map(el => [el[0] + i, el[1]]);
+      .map(el => [el[0] + i, el[1]]) ;
     const col = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]]
-    .map(el => [el[0], el[1] + j]);
-    return [...row, ...col];
+      .map(el => [el[0], el[1] + j]);
+
+    return [...cropSequence(row, board, id), ...cropSequence(col, board, id)];
   }
 }
