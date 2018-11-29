@@ -23,6 +23,12 @@
     border-top: none;
 }
 
+.figure {
+    width: 10%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 @media (max-width: 660px) {
     .taken-container {
         width: 100%;

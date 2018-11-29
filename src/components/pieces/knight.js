@@ -1,5 +1,6 @@
 import Piece from './piece';
-import { mapKeyToIndices } from '../../utils/mapIndicesToKeys';
+import { coords } from '../../utils/coords';
+import { mapIndexToCoords } from '../../utils/utils';
 
 export default class Knight extends Piece {
   constructor(color) {
@@ -9,10 +10,7 @@ export default class Knight extends Piece {
     super(color, url, 'Knight');
   }
 
-  getAllowedMoves(board, id) {
-    const [i, j] = mapKeyToIndices(id);
-    return [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
-      .map(el => [el[0] + i, el[1] + j])
-      .filter(el => (el[0] >= 0 && el[0] <= 7 && el[1] >= 0 && el[1] <= 7));
+  getMoves(board, id) {
+    return coords.shapeL(...mapIndexToCoords(id))
   }
 }

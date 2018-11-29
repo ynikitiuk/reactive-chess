@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
-import classes from './board.module.css';
 import { connect } from  'react-redux';
 
+import classes from './board.module.css';
 import Square from './square/square';
+import { mapIndexToKey } from '../../utils/utils';
 
 class Board extends Component {
   render() {
     const {board, selected, allowed, clicked} = this.props;
-    const squares = [];
-    for (let key in board) {
-      squares.push({
-        id: key,
-        figure: board[key].figure,
-        color: board[key].color
-      })
-    }
 
     return (
       <div className={classes['board-container']}>
-        {squares.map(square =>
-          <Square
-            key={square.id}
-            id={square.id}
-            figure={square.figure}
-            color={square.color}
-            selected={selected === square.id}
-            allowed={allowed.includes(square.id)}
-            clicked={() => clicked(square.id, selected)}
-          />)}
+        {board.map((square, index) => {
+          const color = (selected === index || allowed.includes(index)) ? 'selected' : square.color;
+
+          return <Square
+            key={mapIndexToKey(index)}
+            url={square.figure ? `url(${square.figure.image})` : 'none'}
+            color={color}
+            clicked={() => clicked(selected, index)}
+          />
+        })}
       </div>
     )
   }
@@ -43,14 +36,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    clicked: (square, selected) => {
-      if (selected) {
+    clicked: (selected, square) => {
+      selected !== null ?
         selected === square ?
-        dispatch({type: 'DESELECT'}) :
-        dispatch({type: 'MOVE', from: selected, to: square})
-      } else {
-        dispatch({type: 'SELECT', id: square})
-      }
+          dispatch({type: 'DESELECT'}) :
+          dispatch({type: 'MOVE', from: selected, to: square})
+      : dispatch({type: 'SELECT', id: square})
     }
   }
 };

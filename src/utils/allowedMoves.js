@@ -1,6 +1,7 @@
-import { mapIndicesToKeys } from './mapIndicesToKeys';
+import { mapCoordsListToIndices } from './utils';
 
-export const allowedMoves = (board, id) => {
-  return id ? mapIndicesToKeys(board[id].figure.getAllowedMoves(board, id))
-    .filter(key => board[key].player !== board[id].figure.player) : [];
+export const allowedMoves = (board, selected) => {
+  return selected !== null ? board[selected].figure.getMoves(board, selected)
+    .filter(id => board[id].figure ? board[id].figure.player !== board[selected].figure.player : true)
+    : [];
 };

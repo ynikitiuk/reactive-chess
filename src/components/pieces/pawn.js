@@ -1,5 +1,6 @@
 import Piece from './piece';
-import { mapIndicesToKey, mapKeyToIndices } from "../../utils/mapIndicesToKeys";
+import { mapIndexToCoords } from "../../utils/utils";
+import { coords } from '../../utils/coords';
 
 export default class Pawn extends Piece {
   constructor(color) {
@@ -9,16 +10,18 @@ export default class Pawn extends Piece {
     super(color, url, 'Pawn');
   }
 
-  getAllowedMoves(board, id) {
-    const [i, j] = mapKeyToIndices(id);
+  getMoves(board, id) {
+    const [i, j] = mapIndexToCoords(id);
     const direction = this.player === 'black' ? 1 : -1;
-    const sides = [[i + direction, j - 1], [i + direction, j + 1]]
-      .filter(el => (el[0] >= 0 && el[0] <= 7 && el[1] >= 0 && el[1] <= 7))
-      .filter(el => !!board[mapIndicesToKey(el)].figure);
-    const forward = board[mapIndicesToKey([i + direction, j])].figure? [] : (this.firstMove ?
-      [[i + direction, j], [i + 2*direction, j]] :
-      [[i + direction, j]]);
 
-    return [...sides, ...forward];
+    const capturing = coords.sides(i, j, direction)
+      .filter(el => board[el].figure);
+
+    const [firstSquare, secondSquare] = coords.forward(i, j, direction);
+    const movement = board[firstSquare].figure ? [] :
+      this.firstMove ? [firstSquare, secondSquare] :
+      [firstSquare];
+
+    return [...capturing, ...movement];
   }
 }

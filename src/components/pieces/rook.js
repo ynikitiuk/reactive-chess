@@ -1,5 +1,7 @@
 import Piece from './piece';
-import { cropSequence, mapKeyToIndices } from '../../utils/mapIndicesToKeys';
+import { coords } from '../../utils/coords';
+import { selectEmptyRange } from '../../utils/selectEmptyRange';
+import { mapIndexToCoords } from '../../utils/utils';
 
 export default class Rook extends Piece {
   constructor(color) {
@@ -9,13 +11,11 @@ export default class Rook extends Piece {
     super(color, url, 'Rook');
   }
 
-  getAllowedMoves(board, id) {
-    const [i, j] = mapKeyToIndices(id);
-    const row = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]
-      .map(el => [el[0] + i, el[1]]) ;
-    const col = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]]
-      .map(el => [el[0], el[1] + j]);
+  getMoves(board, id) {
+    const [i, j] = mapIndexToCoords(id);
+    const row = selectEmptyRange(coords.row(i), board, id);
+    const col = selectEmptyRange(coords.column(j), board, id);
 
-    return [...cropSequence(row, board, id), ...cropSequence(col, board, id)];
+    return [...row, ...col];
   }
 }

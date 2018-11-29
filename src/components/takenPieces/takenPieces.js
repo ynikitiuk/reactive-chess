@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from  'react-redux';
 
 import classes from './takenPieces.module.css';
-import Square from '../board/square/square';
 
 const takenPieces = ({player, taken}) => {
   const classesArr = [classes['taken'], classes[`taken-${player}`]];
   const elements = taken[player].length ?
-    taken[player].map((piece, index) => <Square figure={piece} key={index} style={{width: '5%'}}/>) :
+    taken[player].map((figure, index) =>
+      <div key={index}
+           className={classes['figure']}
+           style={{backgroundImage: `url(${figure.image})`}}/>) :
     null;
 
   return (
-    <>
-      <div className={classesArr.join(' ')}>
-        {elements}
-      </div>
-    </>
+    <div className={classesArr.join(' ')}>
+      {elements}
+    </div>
   )
 };
 

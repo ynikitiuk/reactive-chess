@@ -1,9 +1,11 @@
-import Rook from "../components/pieces/rook";
-import Knight from "../components/pieces/knight";
 import Bishop from "../components/pieces/bishop";
-import Queen from "../components/pieces/queen";
 import King from "../components/pieces/king";
+import Knight from "../components/pieces/knight";
 import Pawn from "../components/pieces/pawn";
+import Queen from "../components/pieces/queen";
+import Rook from "../components/pieces/rook";
+
+import { mapIndexToCoords, mapIndexToKey } from './utils';
 
 export const initializeBoard = () => {
   const initialSetup = {
@@ -41,44 +43,13 @@ export const initializeBoard = () => {
     h8: new Rook('black')
   };
 
-  const initialState = {
-    board: {},
-    selectedSquare: null,
-    allowedMoves: [],
-    taken: {
-      black: [],
-      white: []
-    },
-    whiteMove: true
-  };
-
-  for (let j = 8; j >= 1; j--) {
-    for (let i = 1; i <= 8; i++) {
-      const key = `${String.fromCharCode(96+i)}${j}`;
-      initialState.board[key] = {
-        color: (i + j) % 2 === 0 ? 'dark' : 'light',
-        player: j === 1 || j === 2 ? 'white' : j === 7 || j === 8 ? 'black' : null,
+  return Array(64).fill(null)
+    .map((el, index) => {
+      const [i, j] = mapIndexToCoords(index);
+      const key = mapIndexToKey(index);
+      return {
+        color: (i + j) % 2 === 0 ? 'light' : 'dark',
         figure: initialSetup.hasOwnProperty(key) ? initialSetup[key] : null
-      }
-    }
-  }
-
-  return initialState;
+      };
+    });
 };
-
-
-
-// const initialState = Array(64).fill(null)
-//   .reduce((state, el, index) => {
-//     const i = Math.ceil((index+1)/8);
-//     const j = index%8 + 1;
-//     const key = `${String.fromCharCode(96+i)}${j}`;
-//     return {
-//       ...state,
-//       [key]: {
-//         color: (i + j) % 2 === 0 ? 'dark' : 'light',
-//         player: j === 1 || j === 2 ? 'white' : j === 7 || j === 8 ? 'black' : null,
-//         figure: initialSetup.hasOwnProperty(key) ? initialSetup[key] : null
-//       }
-//     };
-//   }, {});

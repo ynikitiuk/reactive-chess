@@ -1,14 +1,23 @@
+import { allowedMoves } from '../utils/allowedMoves';
 import { initializeBoard } from '../utils/initializeBoard';
 import { selectionIsAllowed } from '../utils/selectionIsAllowed';
-import { allowedMoves } from '../utils/allowedMoves';
 
-const initialState = initializeBoard();
-console.log(initialState);
+const initialState = {
+  board: initializeBoard(),
+  taken: {
+    black: [],
+    white: []
+  },
+  whiteMove: true,
+  selectedSquare: null,
+  allowedMoves: []
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SELECT':
       const selectedPiece = selectionIsAllowed(state, action.id) ? action.id : null;
+
       return {
         ...state,
         selectedSquare: selectedPiece,
@@ -21,38 +30,38 @@ const reducer = (state = initialState, action) => {
         allowedMoves: []
       };
     case 'MOVE':
+      // TODO Add promotion mechanism
+      // TODO Add castling
+      // TODO Add en passant rule
       if (!state.allowedMoves.includes(action.to)) return state;
-      state.board[action.from].figure.firstMove = false;
 
-      const updatedSquareFrom = {
+      state.board[action.from].figure.firstMove = false;
+      const player = state.whiteMove ? 'black' : 'white'; // TODO rename
+
+      const updatedBoard = [...state.board];
+      updatedBoard[action.from] = {
         ...state.board[action.from],
-        figure: null,
-        player: null
+        figure: null
       };
-      const updatedSquareTo = {
+      updatedBoard[action.to] = {
         ...state.board[action.to],
-        figure: state.board[action.from].figure,
-        player: state.board[action.from].player
+        figure: state.board[action.from].figure
       };
-      const updatedBoard = {
-        ...state.board,
-        [action.from]: updatedSquareFrom,
-        [action.to]: updatedSquareTo
-      };
+
       const updatedTaken = state.board[action.to].figure ?
         {
           ...state.taken,
-          [state.board[action.to].player]: [...state.taken[state.board[action.to].player], state.board[action.to].figure]
+          [player]: [...state.taken[player], state.board[action.to].figure]
         } :
         state.taken;
-      console.log(updatedBoard);
+
       return {
         ...state,
         board: updatedBoard,
-        selectedSquare: null,
-        allowedMoves: [],
         taken: updatedTaken,
-        whiteMove: !state.whiteMove
+        whiteMove: !state.whiteMove,
+        selectedSquare: null,
+        allowedMoves: []
       };
     default:
       return state;

@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 
 import classes from './currentPlayer.module.css';
 
-const currentPlayer = ({whiteMove}) => {
-  console.log(whiteMove);
-  const classesArr = [classes['current'], classes[`current-${whiteMove ? 'white' : 'black'}`]];
+const currentPlayer = ({player}) => {
+  const classesArr = [classes['current'], classes[`current-${player}`]];
+
   return (
     <div>
-      Move: <div className={classesArr.join(' ')}></div>
+      Move: <div className={classesArr.join(' ')} />
     </div>
   )
-}
+};
 
 const mapStateToProps = state => {
   return {
-    whiteMove: state.whiteMove
+    player: state.whiteMove ? 'white' : 'black'
   }
-}
+};
 
 export default connect(mapStateToProps)(currentPlayer);
