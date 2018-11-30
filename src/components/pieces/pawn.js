@@ -19,7 +19,7 @@ export default class Pawn extends Piece {
 
     const [firstSquare, secondSquare] = coords.forward(i, j, direction);
     const movement = board[firstSquare].figure ? [] :
-      this.firstMove ? [firstSquare, secondSquare] :
+      this.firstMove && !board[secondSquare].figure ? [firstSquare, secondSquare] :
       [firstSquare];
 
     return [...capturing, ...movement];

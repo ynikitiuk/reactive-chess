@@ -1,13 +1,6 @@
-export const mapCoordsToKey = ([i ,j]) => {
-  return `${String.fromCharCode(97 + j)}${8 - i}`;
-};
-
 export const mapIndexToKey = (index) => {
-  return mapCoordsToKey(mapIndexToCoords(index));
-};
-
-export const mapCoordsListToIndices = (coords) => {
-  return coords.map(mapCoordsToIndex);
+  const [i, j] = mapIndexToCoords(index);
+  return `${String.fromCharCode(97 + j)}${8 - i}`;
 };
 
 export const mapCoordsToIndex = ([i ,j]) => {
@@ -15,8 +8,5 @@ export const mapCoordsToIndex = ([i ,j]) => {
 };
 
 export const mapIndexToCoords = (index) => {
-  const i = Math.floor(index / 8);
-  const j = index % 8;
-
-  return [i, j];
+  return [Math.floor(index / 8), index % 8];
 };

@@ -2,7 +2,6 @@
     width: 90%;
     display: flex;
     margin: auto;
-    border: 2px solid dodgerblue;
     background-color: sandybrown;
     box-sizing: border-box;
 }
@@ -25,11 +24,23 @@
 
 .figure {
     width: 10%;
+    margin-left: 2%;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
 }
 
-@media (max-width: 660px) {
+.number {
+    width: 40%;
+    height: 40%;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    justify-self: right;
+}
+
+@media (max-width: 700px) {
     .taken-container {
         width: 100%;
     }

@@ -7,18 +7,14 @@ import { mapIndexToKey } from '../../utils/utils';
 
 class Board extends Component {
   render() {
-    const {board, selected, allowed, clicked} = this.props;
-
     return (
       <div className={classes['board-container']}>
-        {board.map((square, index) => {
-          const color = (selected === index || allowed.includes(index)) ? 'selected' : square.color;
-
+        {this.props.board.map((square, index) => {
           return <Square
             key={mapIndexToKey(index)}
+            id={index}
             url={square.figure ? `url(${square.figure.image})` : 'none'}
-            color={color}
-            clicked={() => clicked(selected, index)}
+            color={square.color}
           />
         })}
       </div>
@@ -29,21 +25,7 @@ class Board extends Component {
 const mapStateToProps = state => {
   return {
     board: state.board,
-    selected: state.selectedSquare,
-    allowed: state.allowedMoves
   }
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    clicked: (selected, square) => {
-      selected !== null ?
-        selected === square ?
-          dispatch({type: 'DESELECT'}) :
-          dispatch({type: 'MOVE', from: selected, to: square})
-      : dispatch({type: 'SELECT', id: square})
-    }
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps)(Board);
