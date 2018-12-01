@@ -4,6 +4,7 @@ import classes from './App.module.css';
 import Board from './components/board/board';
 import Current from './components/currentPlayer/currentPlayer';
 import TakenPieces from "./components/takenPieces/takenPieces";
+import CurrentPlayer from './components/currentPlayer/currentPlayer';
 
 class App extends Component {
   render() {
@@ -14,7 +15,7 @@ class App extends Component {
           <Board />
           <TakenPieces player='black'/>
         </div>
-        <Current />
+        <CurrentPlayer />
         {/*<History />*/}
       </div>
     );

@@ -1,15 +1,10 @@
 .taken {
-    width: 90%;
+    width: 70vmin;
+    height: 7.5vmin;
     display: flex;
     margin: auto;
     background-color: sandybrown;
     box-sizing: border-box;
-}
-
-.taken:before {
-    content: "";
-    display: inline-block;
-    padding-top: 10%;
 }
 
 .taken-white {
@@ -24,24 +19,24 @@
 
 .figure {
     width: 10%;
-    margin-left: 2%;
+    margin-left: 5%;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
+    justify-content: flex-end;
+    text-align: end;
 }
 
 .number {
     width: 40%;
     height: 40%;
+    margin-top: 5%;
     background-color: red;
     color: white;
+    font-size: 60%;
     font-weight: bold;
     border-radius: 50%;
-    justify-self: right;
-}
-
-@media (max-width: 700px) {
-    .taken-container {
-        width: 100%;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

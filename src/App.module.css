@@ -1,16 +1,13 @@
 .App {
-  text-align: center;
-  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5vmin;
+  flex-wrap: wrap;
 }
 
 .field {
   box-sizing: border-box;
-  width: 60vmin;
-  margin: auto;
-}
-
-@media (max-width: 700px) {
-  .field {
-    width: 90vmin;
-  }
+  width: 80vmin;
+  height: 95vmin;
 }
