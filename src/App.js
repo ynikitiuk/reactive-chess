@@ -11,9 +11,9 @@ class App extends Component {
     return (
       <div className={classes['App']}>
         <div className={classes['field']}>
-          <TakenPieces player='white'/>
-          <Board />
           <TakenPieces player='black'/>
+          <Board />
+          <TakenPieces player='white'/>
         </div>
         <CurrentPlayer />
         {/*<History />*/}

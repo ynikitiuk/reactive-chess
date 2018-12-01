@@ -11,6 +11,22 @@ export default class King extends Piece {
   }
 
   getMoves(board, id) {
-    return coords.around(...mapIndexToCoords(id))
+    const [i, j] = mapIndexToCoords(id);
+    const movement = coords.around(i, j);
+    const castlingRight = this.firstMove && 
+                          board[id + 3].figure &&
+                          board[id + 3].figure.firstMove &&
+                          !board[id + 1].figure &&
+                          !board[id + 2].figure ? 
+                          [8 * i + 6] : [];
+    const castlingLeft = this.firstMove && 
+                         board[id - 4].figure &&
+                         board[id - 4].figure.firstMove &&
+                         !board[id - 1].figure &&
+                         !board[id - 2].figure &&
+                         !board[id - 3].figure ? 
+                         [8 * i + 2] : [];
+
+    return [...movement, ...castlingRight, ...castlingLeft];
   }
 }
