@@ -1,29 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from  'react-redux';
 
 import classes from './board.module.css';
 import Square from './square/square';
 import { mapIndexToKey } from '../../utils/utils';
 import { selectionIsAllowed } from '../../utils/selectionIsAllowed';
+import { allowedMoves } from '../../utils/allowedMoves';
+import { isChecked } from '../../utils/isChecked';
 
-const board = ({state, board, selected, checked, allowed, clickHandler}) => {
-  return (
-    <div className={classes['board-container']}>
-      {board.map((square, index) => {
-        const squareState = selected === index ? 'selected' :
-          allowed.includes(index) ? 'allowed' :
-          checked === index ? 'checked' : null;
-        return <Square
-          key={mapIndexToKey(index)}
-          url={square.figure ? `url(${square.figure.image})` : 'none'}
-          color={square.color}
-          state={squareState}
-          clicked={() => clickHandler(state, index)}
-        />
-      })}
-    </div>
-  )
+class Board extends Component {
+  componentDidUpdate() {
+    // Check if game ended
+    // TODO:  move into separate component
+    const player = this.props.state.whiteMove ? 'white' : 'black'
+    const king = this.props.board.map((square, index) => ({...square, index: index}))
+        .filter(square => square.figure && square.figure.player === player
+          && square.figure.name === 'King')[0];
+
+    const allAllowedMoves = this.props.board.map((square, index) => ({...square, index: index}))
+      .filter(square => square.figure && square.figure.player === player)
+      .reduce((moves, square) => {
+        return [...moves, ...allowedMoves(this.props.state, square.index)]
+      }, []) ;
+    console.log(allAllowedMoves);
+
+    const endMessage = allAllowedMoves.length === 0 ? 
+      isChecked(this.props.board, king) ? `Checkmate! ${this.props.state.whiteMove ? 'Black' : 'White'} wins!` : 'Stalemate!'
+      : null;
+    if (endMessage) alert(endMessage);
+  }
+
+  render() {
+    const {state, board, selected, checked, allowed, clickHandler} = this.props;
+
+    return (
+      <div className={classes['board-container']}>
+        {board.map((square, index) => {
+          const squareState = selected === index ? 'selected' :
+            allowed.includes(index) ? 'allowed' :
+            checked === index ? 'checked' : null;
+          return <Square
+            key={mapIndexToKey(index)}
+            url={square.figure ? `url(${square.figure.image})` : 'none'}
+            color={square.color}
+            state={squareState}
+            clicked={() => clickHandler(state, index)}
+          />
+        })}
+      </div>)
+  }
 }
+
 
 const mapStateToProps = state => {
   return {
@@ -65,4 +92,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(board);
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

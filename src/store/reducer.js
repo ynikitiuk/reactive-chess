@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedSquare: action.id,
-        allowedMoves: allowedMoves(state.board, action.id)
+        allowedMoves: allowedMoves(state, action.id)
       };
     case 'DESELECT':
       return {
