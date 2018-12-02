@@ -1,6 +1,7 @@
 import { allowedMoves } from '../utils/allowedMoves';
 import { initializeBoard } from '../utils/initializeBoard';
 import { prepareNewBoard } from '../utils/prepareNewBoard';
+import { isChecked } from '../utils/isChecked';
 
 const initialState = {
   board: initializeBoard(),
@@ -10,6 +11,7 @@ const initialState = {
   },
   whiteMove: true,
   selectedSquare: null,
+  checkedSquare: null,
   allowedMoves: []
 };
 
@@ -39,13 +41,18 @@ const reducer = (state = initialState, action) => {
         } :
         state.taken;
 
+      const king = state.board.map((square, index) => ({...square, index: index}))
+        .filter(square => square.figure && square.figure.player === 
+          (player === 'white' ? 'black' : 'white') && square.figure.name === 'King')[0];
+
       return {
         ...state,
         board: updatedBoard,
         taken: updatedTaken,
         whiteMove: !state.whiteMove,
         selectedSquare: null,
-        allowedMoves: []
+        allowedMoves: [],
+        checkedSquare: isChecked(updatedBoard, king) ? king.index : null
       };
     default:
       return state;

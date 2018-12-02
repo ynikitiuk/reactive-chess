@@ -6,13 +6,13 @@ import Square from './square/square';
 import { mapIndexToKey } from '../../utils/utils';
 import { selectionIsAllowed } from '../../utils/selectionIsAllowed';
 
-const board = ({state, board, selected, allowed, clickHandler}) => {
+const board = ({state, board, selected, checked, allowed, clickHandler}) => {
   return (
     <div className={classes['board-container']}>
       {board.map((square, index) => {
         const squareState = selected === index ? 'selected' :
           allowed.includes(index) ? 'allowed' :
-          null;
+          checked === index ? 'checked' : null;
         return <Square
           key={mapIndexToKey(index)}
           url={square.figure ? `url(${square.figure.image})` : 'none'}
@@ -30,7 +30,8 @@ const mapStateToProps = state => {
     state,
     board: state.board,
     selected: state.selectedSquare,
-    allowed: state.allowedMoves
+    allowed: state.allowedMoves,
+    checked: state.checkedSquare
   }
 };
 
