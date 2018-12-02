@@ -1,7 +1,6 @@
 import { allowedMoves } from '../utils/allowedMoves';
 import { initializeBoard } from '../utils/initializeBoard';
-import { selectionIsAllowed } from '../utils/selectionIsAllowed';
-import Queen from '../components/pieces/queen';
+import { prepareNewBoard } from '../utils/prepareNewBoard';
 
 const initialState = {
   board: initializeBoard(),
@@ -17,11 +16,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SELECT':
-      return selectionIsAllowed(state, action.id) ? {
+      return {
         ...state,
         selectedSquare: action.id,
         allowedMoves: allowedMoves(state.board, action.id)
-      } : state;
+      };
     case 'DESELECT':
       return {
         ...state,
@@ -29,49 +28,10 @@ const reducer = (state = initialState, action) => {
         allowedMoves: []
       };
     case 'MOVE':
-      // TODO Add en passant rule
-      if (!state.allowedMoves.includes(action.to)) return state;
-
       state.board[action.from].figure.firstMove = false;
+
       const player = state.whiteMove ? 'white' : 'black';
-
-      const updatedBoard = [...state.board];
-
-      updatedBoard[action.from] = {
-        ...state.board[action.from],
-        figure: null
-      };
-
-      // Check if pawn should be promoted
-      const figure = state.board[action.from].figure.name === 'Pawn' && (action.to <= 7 || action.to >= 56) ?
-        new Queen(player) : state.board[action.from].figure
-
-      updatedBoard[action.to] = {
-        ...state.board[action.to],
-        figure: figure
-      };
-
-      // Check for castling
-      if (state.board[action.from].figure.name === 'King' && action.from - action.to === 2) {
-        updatedBoard[action.from - 4] = {
-          ...state.board[action.from - 4],
-          figure: null
-        };
-        updatedBoard[action.from - 1] = {
-          ...state.board[action.from - 1],
-          figure: state.board[action.from - 4].figure
-        };
-      } else if (state.board[action.from].figure.name === 'King' && action.from - action.to === -2) {
-        updatedBoard[action.from + 3] = {
-          ...state.board[action.from + 3],
-          figure: null
-        };
-        updatedBoard[action.from + 1] = {
-          ...state.board[action.from + 1],
-          figure: state.board[action.from + 3].figure
-        };
-      }
-
+      const updatedBoard = prepareNewBoard(state, action);
       const updatedTaken = state.board[action.to].figure ?
         {
           ...state.taken,
