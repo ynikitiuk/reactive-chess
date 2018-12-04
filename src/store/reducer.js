@@ -30,19 +30,19 @@ const reducer = (state = initialState, action) => {
         allowedMoves: []
       };
     case 'MOVE':
-      state.board[action.from].figure.firstMove = false;
+      state.board[action.from].firstMove = false;
 
       const player = state.whiteMove ? 'white' : 'black';
       const updatedBoard = prepareNewBoard(state, action);
-      const updatedTaken = state.board[action.to].figure ?
+      const updatedTaken = state.board[action.to] ?
         {
           ...state.taken,
-          [player]: [...state.taken[player], state.board[action.to].figure]
+          [player]: [...state.taken[player], state.board[action.to]]
         } :
         state.taken;
 
-      const king = state.board.map((square, index) => ({...square, index: index}))
-        .filter(square => square.figure && square.figure.player === 
+      const king = state.board.map((figure, index) => ({figure, index}))
+        .filter(square => square.figure && square.figure.player ===
           (player === 'white' ? 'black' : 'white') && square.figure.name === 'King')[0];
 
       return {

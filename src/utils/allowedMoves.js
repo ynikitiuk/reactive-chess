@@ -7,9 +7,9 @@ export const allowedMoves = (state, selected) => {
     .filter(move => {
       const updatedBoard = prepareNewBoard(state, {from: selected, to: move});
 
-      const king = updatedBoard.map((square, index) => ({...square, index: index}))
-        .filter(square => square.figure && square.figure.player === 
-          updatedBoard[move].figure.player && square.figure.name === 'King')[0];
+      const king = updatedBoard.map((figure, index) => ({figure, index}))
+        .filter(square => square.figure && square.figure.player ===
+          updatedBoard[move].player && square.figure.name === 'King')[0];
 
       return !isChecked(updatedBoard, king);
     })

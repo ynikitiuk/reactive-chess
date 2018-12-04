@@ -13,18 +13,18 @@ export default class King extends Piece {
   getMoves(board, id) {
     const [i, j] = mapIndexToCoords(id);
     const movement = coords.around(i, j);
-    const castlingRight = this.firstMove && 
-                          board[id + 3].figure &&
-                          board[id + 3].figure.firstMove &&
-                          !board[id + 1].figure &&
-                          !board[id + 2].figure ? 
+    const castlingRight = this.firstMove &&
+                          board[id + 3] &&
+                          board[id + 3].firstMove &&
+                          !board[id + 1] &&
+                          !board[id + 2] ?
                           [8 * i + 6] : [];
-    const castlingLeft = this.firstMove && 
-                         board[id - 4].figure &&
-                         board[id - 4].figure.firstMove &&
-                         !board[id - 1].figure &&
-                         !board[id - 2].figure &&
-                         !board[id - 3].figure ? 
+    const castlingLeft = this.firstMove &&
+                         board[id - 4] &&
+                         board[id - 4].firstMove &&
+                         !board[id - 1] &&
+                         !board[id - 2] &&
+                         !board[id - 3] ?
                          [8 * i + 2] : [];
 
     return [...movement, ...castlingRight, ...castlingLeft];

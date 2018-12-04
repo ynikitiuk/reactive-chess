@@ -5,7 +5,7 @@ import Pawn from "../components/pieces/pawn";
 import Queen from "../components/pieces/queen";
 import Rook from "../components/pieces/rook";
 
-import { mapIndexToCoords, mapIndexToKey } from './utils';
+import { mapIndexToKey } from './utils';
 
 export const initializeBoard = () => {
   const initialSetup = {
@@ -45,11 +45,7 @@ export const initializeBoard = () => {
 
   return Array(64).fill(null)
     .map((el, index) => {
-      const [i, j] = mapIndexToCoords(index);
       const key = mapIndexToKey(index);
-      return {
-        color: (i + j) % 2 === 0 ? 'light' : 'dark',
-        figure: initialSetup.hasOwnProperty(key) ? initialSetup[key] : null
-      };
+      return initialSetup.hasOwnProperty(key) ? initialSetup[key] : el;
     });
 };

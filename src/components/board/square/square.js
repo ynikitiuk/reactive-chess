@@ -10,6 +10,6 @@ const square = ({url, color, state, clicked}) => {
     className={classesArr.join(' ')}
     style={{backgroundImage: url}}
     onClick={clicked} />
-}
+};
 
 export default square;

@@ -15,11 +15,11 @@ export default class Pawn extends Piece {
     const direction = this.player === 'black' ? 1 : -1;
 
     const capturing = coords.sides(i, j, direction)
-      .filter(el => board[el].figure);
+      .filter(el => board[el]);
 
     const [firstSquare, secondSquare] = coords.forward(i, j, direction);
-    const movement = board[firstSquare].figure ? [] :
-      this.firstMove && !board[secondSquare].figure ? [firstSquare, secondSquare] :
+    const movement = board[firstSquare] ? [] :
+      this.firstMove && !board[secondSquare] ? [firstSquare, secondSquare] :
       [firstSquare];
 
     return [...capturing, ...movement];

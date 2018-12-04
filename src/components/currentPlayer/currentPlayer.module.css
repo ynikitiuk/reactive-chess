@@ -1,4 +1,9 @@
-.current {
+.current-container {
+  align-self: flex-start;
+  margin-left: 30px;
+}
+
+.current-square {
   display: inline-block;
   border: 1px solid black;
   padding: 0.5em;
