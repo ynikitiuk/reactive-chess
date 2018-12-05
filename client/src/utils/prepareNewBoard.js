@@ -19,6 +19,5 @@ export const prepareNewBoard = (state, action) => {
     updatedBoard[action.from + 1] = state.board[action.from + 3];
   }
 
-  console.log(updatedBoard);
   return updatedBoard;
 };

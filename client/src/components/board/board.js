@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from  'react-redux';
+import openSocket from "socket.io-client";
 
 import classes from './board.module.css';
 import Square from './square/square';
@@ -66,29 +67,31 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     clickHandler: (state, square) => {
-      const action = state.selectedSquare === null ?
-        selectionIsAllowed(state, square) ?
-          {type: 'SELECT', id: square} : null
-        : state.selectedSquare === square ?
-          {type: 'DESELECT'} :
-          state.allowedMoves.includes(square) ?
-            {type: 'MOVE', from: state.selectedSquare, to: square} : null;
+      // const action = state.selectedSquare === null ?
+      //   selectionIsAllowed(state, square) ?
+      //     {type: 'SELECT', id: square} : null
+      //   : state.selectedSquare === square ?
+      //     {type: 'DESELECT'} :
+      //     state.allowedMoves.includes(square) ?
+      //       {type: 'MOVE', from: state.selectedSquare, to: square} : null;
+      //
+      // if (action) dispatch(action);
 
-      if (action) dispatch(action);
-
-      // if (state.selectedSquare !== null) {
-      //   if (state.selectedSquare === square) {
-      //     dispatch({type: 'DESELECT'})
-      //   } else {
-      //     if (state.allowedMoves.includes(square)) {
-      //       dispatch({type: 'MOVE', from: state.selectedSquare, to: square})
-      //     }
-      //   }
-      // } else {
-      //   if (selectionIsAllowed(state, square)) {
-      //     dispatch({type: 'SELECT', id: square})
-      //   }
-      // }
+      if (state.selectedSquare !== null) {
+        if (state.selectedSquare === square) {
+          dispatch({type: 'DESELECT'})
+        } else {
+          if (state.allowedMoves.includes(square)) {
+            const socket = openSocket('http://localhost:3001');
+            socket.emit('MOVE', {type: 'MOVE', from: state.selectedSquare, to: square});
+            // dispatch({type: 'MOVE', from: state.selectedSquare, to: square})
+          }
+        }
+      } else {
+        if (selectionIsAllowed(state, square)) {
+          dispatch({type: 'SELECT', id: square})
+        }
+      }
     }
   }
 };
