@@ -12,7 +12,8 @@ import openSocket from "socket.io-client";
 
 const store = createStore(reducer);
 
-const socket = openSocket('http://localhost:3001');
+// const socket = openSocket('http://localhost:3001');
+const socket = openSocket('https://reactive-chess.herokuapp.com/');
 socket.on('MOVE', (action) => {
   store.dispatch(action);
 });

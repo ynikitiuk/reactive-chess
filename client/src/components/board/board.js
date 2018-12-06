@@ -82,7 +82,8 @@ const mapDispatchToProps = dispatch => {
           dispatch({type: 'DESELECT'})
         } else {
           if (state.allowedMoves.includes(square)) {
-            const socket = openSocket('http://localhost:3001');
+            // const socket = openSocket('http://localhost:3001');
+            const socket = openSocket('https://reactive-chess.herokuapp.com/');
             socket.emit('MOVE', {type: 'MOVE', from: state.selectedSquare, to: square});
             // dispatch({type: 'MOVE', from: state.selectedSquare, to: square})
           }
