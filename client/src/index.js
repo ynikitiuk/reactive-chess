@@ -8,15 +8,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './store/reducer';
 
-import openSocket from "socket.io-client";
-
 const store = createStore(reducer);
-
-// const socket = openSocket('http://localhost:3001');
-const socket = openSocket('https://reactive-chess.herokuapp.com/');
-socket.on('MOVE', (action) => {
-  store.dispatch(action);
-});
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

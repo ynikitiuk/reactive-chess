@@ -4,7 +4,7 @@ import openSocket from "socket.io-client";
 
 import classes from './board.module.css';
 import Square from './square/square';
-import {mapIndexToCoords, mapIndexToKey} from '../../utils/utils';
+import { mapIndexToCoords, mapIndexToKey } from '../../utils/utils';
 import { selectionIsAllowed } from '../../utils/selectionIsAllowed';
 import { allowedMoves } from '../../utils/allowedMoves';
 import { isChecked } from '../../utils/isChecked';
@@ -82,10 +82,10 @@ const mapDispatchToProps = dispatch => {
           dispatch({type: 'DESELECT'})
         } else {
           if (state.allowedMoves.includes(square)) {
-            // const socket = openSocket('http://localhost:3001');
-            const socket = openSocket('https://reactive-chess.herokuapp.com/');
-            socket.emit('MOVE', {type: 'MOVE', from: state.selectedSquare, to: square});
-            // dispatch({type: 'MOVE', from: state.selectedSquare, to: square})
+            const socket = openSocket('http://localhost:3001');
+            // const socket = openSocket('https://reactive-chess.herokuapp.com/');
+            // dispatch({type: 'MOVE', from: state.selectedSquare, to: square});
+            socket.emit('move', {type: 'MOVE', from: state.selectedSquare, to: square});
           }
         }
       } else {

@@ -1,9 +1,12 @@
+import openSocket from "socket.io-client";
+
 import { allowedMoves } from '../utils/allowedMoves';
 import { initializeBoard } from '../utils/initializeBoard';
 import { prepareNewBoard } from '../utils/prepareNewBoard';
 import { isChecked } from '../utils/isChecked';
 
 const initialState = {
+  socket: openSocket('http://localhost:3001'),
   board: initializeBoard(),
   taken: {
     black: [],

@@ -16,8 +16,28 @@ if (process.env.NODE_ENV === 'production') {
 io.on('connection', socket => {
   console.log('Client connected');
 
-  socket.on('MOVE', (action) => {
-    io.sockets.emit('MOVE', action)
+  socket.on('createGame', ({name}) => {
+    const roomId = new Date().getTime().toString(36);
+    socket.join(roomId);
+    console.log(io.nsps['/'].adapter.rooms);
+    socket.emit('newGame', { name, roomId});
+  });
+
+  socket.on('joinGame', ({name, roomId}) => {
+    const room = io.nsps['/'].adapter.rooms[roomId];
+    if (room && room.length === 1) {
+      console.log('Room found!');
+      socket.join(roomId);
+      console.log(io.nsps['/'].adapter.rooms);
+      socket.emit('joinGame', { name, roomId });
+      io.sockets.in(roomId).emit('startGame', {});
+    } else {
+      console.log('No such game or game is full!')
+    }
+  });
+
+  socket.on('move', ({action, roomId}) => {
+    io.sockets.in(roomId).emit('move', action)
   });
 
   socket.on('disconnect', () => console.log('Client disconnected'));
