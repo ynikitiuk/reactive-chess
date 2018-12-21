@@ -33,7 +33,7 @@ class LandingPage extends Component {
           <button onClick={this.joinGame}>Join game</button>
         </div>
 
-        {/*<p>Game ID: {this.state.gameId}</p>*/}
+        <p>Game ID: {this.props.gameId}</p>
       </div>
     )
   }
@@ -41,7 +41,8 @@ class LandingPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    socket: state.socket
+    socket: state.socket,
+    gameId: state.gameId
   }
 };
 

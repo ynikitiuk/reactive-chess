@@ -13,7 +13,7 @@ class Board extends Component {
   componentDidUpdate() {
     // Check if game ended
     // TODO:  move into separate component
-    const player = this.props.state.whiteMove ? 'white' : 'black'
+    const player = this.props.state.whiteMove ? 'white' : 'black';
     const king = this.props.board.map((figure, index) => ({figure, index}))
         .filter(square => square.figure && square.figure.player === player
           && square.figure.name === 'King')[0];
@@ -53,7 +53,6 @@ class Board extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
     state,
@@ -85,7 +84,7 @@ const mapDispatchToProps = dispatch => {
             const socket = openSocket('http://localhost:3001');
             // const socket = openSocket('https://reactive-chess.herokuapp.com/');
             // dispatch({type: 'MOVE', from: state.selectedSquare, to: square});
-            socket.emit('move', {type: 'MOVE', from: state.selectedSquare, to: square});
+            socket.emit('move', {action: {type: 'MOVE', from: state.selectedSquare, to: square}, roomId: state.gameId});
           }
         }
       } else {

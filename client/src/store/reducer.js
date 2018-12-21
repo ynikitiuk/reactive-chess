@@ -6,6 +6,8 @@ import { prepareNewBoard } from '../utils/prepareNewBoard';
 import { isChecked } from '../utils/isChecked';
 
 const initialState = {
+  gameId: null,
+  player: null,
   socket: openSocket('http://localhost:3001'),
   board: initializeBoard(),
   taken: {
@@ -20,6 +22,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PLAYER':
+      return {
+        ...state,
+        gameId: action.gameId,
+        player: action.player,
+      };
     case 'SELECT':
       return {
         ...state,
