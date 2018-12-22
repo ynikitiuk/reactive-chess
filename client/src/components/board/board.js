@@ -84,7 +84,7 @@ const mapDispatchToProps = dispatch => {
             const socket = openSocket('http://localhost:3001');
             // const socket = openSocket('https://reactive-chess.herokuapp.com/');
             // dispatch({type: 'MOVE', from: state.selectedSquare, to: square});
-            socket.emit('move', {action: {type: 'MOVE', from: state.selectedSquare, to: square}, roomId: state.gameId});
+            socket.emit('makeMove', {action: {type: 'MOVE', from: state.selectedSquare, to: square}, roomId: state.gameId});
           }
         }
       } else {

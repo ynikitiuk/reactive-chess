@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 
 import Game from './components/game/game';
 import LandingPage from './components/landingPage/landingPage';
@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    props.socket.on('newGame', ({roomId}) => {
+    props.socket.on('gameCreated', ({roomId}) => {
       console.log('New game');
       props.playerHandler({
         type: 'SET_PLAYER',
@@ -18,7 +18,7 @@ class App extends Component {
       });
     });
 
-    props.socket.on('joinGame', ({roomId}) => {
+    props.socket.on('gameJoined', ({roomId}) => {
       console.log('Join game');
       props.playerHandler({
         type: 'SET_PLAYER',
@@ -32,7 +32,12 @@ class App extends Component {
       this.startGame();
     });
 
-    props.socket.on('move', (action) => {
+    props.socket.on('endGame', () => {
+      console.log('End game', props);
+      this.endGame();
+    });
+
+    props.socket.on('moveMade', (action) => {
       props.moveHandler(action);
     });
   }
@@ -41,13 +46,18 @@ class App extends Component {
     this.props.history.push(`/${this.props.gameId}`)
   };
 
+  endGame = () => {
+    this.props.history.push('/')
+  };
+
   render() {
     console.log(this.props);
     return (
-      <>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/:id" component={Game} />
-      </>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        {this.props.gameId ? <Route path={`/${this.props.gameId}`} component={Game} /> : null}
+        <Redirect to="/" />
+      </Switch>
     );
   }
 }
