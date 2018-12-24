@@ -1,0 +1,42 @@
+.container {
+    margin: 20px auto;
+    width: 90vw;
+    max-width: 500px;
+    border: 2px solid saddlebrown;
+    box-sizing: border-box;
+}
+
+.waiting-container {
+    margin-left: 20px;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    width: 50%;
+    color: white;
+    background-color: saddlebrown;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 50%;
+    margin: 5px;
+    padding: 10px;
+}
+
+label {
+    margin-top: 20px;
+}
+
+i {
+    cursor: pointer;
+}
