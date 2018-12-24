@@ -22,12 +22,14 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_PLAYER':
+    case 'SET_GAME':
       return {
         ...state,
         gameId: action.gameId,
         player: action.player,
       };
+    case 'CLEAR_GAME':
+      return initialState;
     case 'SELECT':
       return {
         ...state,

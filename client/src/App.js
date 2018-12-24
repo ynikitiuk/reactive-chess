@@ -12,7 +12,7 @@ class App extends Component {
     props.socket.on('gameCreated', ({roomId}) => {
       console.log('New game');
       props.playerHandler({
-        type: 'SET_PLAYER',
+        type: 'SET_GAME',
         gameId: roomId,
         player: 'white'
       });
@@ -21,7 +21,7 @@ class App extends Component {
     props.socket.on('gameJoined', ({roomId}) => {
       console.log('Join game');
       props.playerHandler({
-        type: 'SET_PLAYER',
+        type: 'SET_GAME',
         gameId: roomId,
         player: 'black'
       });
@@ -47,6 +47,9 @@ class App extends Component {
   };
 
   endGame = () => {
+    this.props.playerHandler({
+      type: 'CLEAR_GAME'
+    });
     this.props.history.push('/')
   };
 
