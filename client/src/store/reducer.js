@@ -9,8 +9,8 @@ import { getKing } from '../utils/getKing';
 const initialState = {
   gameId: null,
   player: null,
-  socket: openSocket('http://localhost:3001'),
-  // socket: openSocket('https://reactive-chess.herokuapp.com/'),
+  // socket: openSocket('http://localhost:3001'),
+  socket: openSocket('https://reactive-chess.herokuapp.com/'),
   board: initializeBoard(),
   taken: {
     black: [],
