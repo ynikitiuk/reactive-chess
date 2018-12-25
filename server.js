@@ -3,7 +3,6 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
-
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -14,8 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', socket => {
-  console.log('Client connected');
-
   socket.on('createGame', ({name}) => {
     const roomId = new Date().getTime().toString(36);
     socket.join(roomId);
@@ -37,11 +34,11 @@ io.on('connection', socket => {
 
   socket.on('disconnecting', () => {
     for (let room in socket.rooms) {
-      io.sockets.in(room).emit('endGame', {})
+      if (socket.rooms.hasOwnProperty(room)) {
+        io.sockets.in(room).emit('endGame', {})
+      }
     }
   });
-
-  socket.on('disconnect', () => console.log('disconnect'));
 });
 
 server.listen(app.get('port'), () => console.log(`Listening on port ${app.get('port')}`));

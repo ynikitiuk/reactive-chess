@@ -29,8 +29,7 @@ const takenPieces = ({player, taken}) => {
 
 const mapStateToProps = state => {
   return {
-    taken: state.taken,
-    white: state.taken.white
+    taken: state.taken
   }
 };
 

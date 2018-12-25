@@ -1,4 +1,5 @@
 import React from 'react';
+
 import classes from "./tab.module.css";
 
 const tab = ({isActive, clicked, children}) => {

@@ -52,12 +52,11 @@ class LandingPage extends Component {
       }
     </>;
 
-    const landingPage =
-      <>
-        <Tab clicked={() => this.selectTab('new')} isActive={this.state.selectedTab === 'new'}>New game</Tab>
-        <Tab clicked={() => this.selectTab('join')} isActive={this.state.selectedTab === 'join'}>Join game</Tab>
-        <div className={classes['tab-content']}>{tabContent}</div>
-      </>;
+    const landingPage = <>
+      <Tab clicked={() => this.selectTab('new')} isActive={this.state.selectedTab === 'new'}>New game</Tab>
+      <Tab clicked={() => this.selectTab('join')} isActive={this.state.selectedTab === 'join'}>Join game</Tab>
+      <div className={classes['tab-content']}>{tabContent}</div>
+    </>;
 
     return <div className={classes['container']}>
       {this.props.gameId ?

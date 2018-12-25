@@ -4,41 +4,30 @@ import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Game from './components/game/game';
 import LandingPage from './components/landingPage/landingPage';
 import { connect } from  'react-redux';
+import { checkGameEnd } from "./utils/checkGameEnd";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     props.socket.on('gameCreated', ({roomId}) => {
-      console.log('New game');
-      props.playerHandler({
-        type: 'SET_GAME',
-        gameId: roomId,
-        player: 'white'
-      });
+      props.setGame(roomId, 'white');
     });
 
     props.socket.on('gameJoined', ({roomId}) => {
-      console.log('Join game');
-      props.playerHandler({
-        type: 'SET_GAME',
-        gameId: roomId,
-        player: 'black'
-      });
+      props.setGame(roomId, 'black');
     });
 
     props.socket.on('startGame', () => {
-      console.log('Start game', props);
       this.startGame();
     });
 
     props.socket.on('endGame', () => {
-      console.log('End game', props);
       this.endGame();
     });
 
     props.socket.on('moveMade', (action) => {
-      props.moveHandler(action);
+      this.handleMove(action);
     });
   }
 
@@ -47,14 +36,16 @@ class App extends Component {
   };
 
   endGame = () => {
-    this.props.playerHandler({
-      type: 'CLEAR_GAME'
-    });
-    this.props.history.push('/')
+    alert('Opponent has left the game');
+    this.props.clearGame();
   };
 
+  handleMove(action) {
+    this.props.moveHandler(action);
+    checkGameEnd(this.props.state);
+  }
+
   render() {
-    console.log(this.props);
     return (
       <Switch>
         <Route exact path="/" component={LandingPage} />
@@ -67,6 +58,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
+    state: state,
     socket: state.socket,
     gameId: state.gameId
   }
@@ -75,7 +67,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     moveHandler: (action) => dispatch(action),
-    playerHandler: (action) => dispatch(action)
+    setGame: (roomId, player) => dispatch({
+      type: 'SET_GAME',
+      gameId: roomId,
+      player: player
+    }),
+    clearGame: () => dispatch({
+      type: 'CLEAR_GAME'
+    })
   }
 };
 

@@ -30,6 +30,6 @@
     content: '';
     width: 1.5vmin;
     height: 1.5vmin;
-    border-radius: 100%;
+    border-radius: 50%;
     background-color: hsl(100, 100%, 25%);
 }

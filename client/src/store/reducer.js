@@ -4,11 +4,13 @@ import { allowedMoves } from '../utils/allowedMoves';
 import { initializeBoard } from '../utils/initializeBoard';
 import { prepareNewBoard } from '../utils/prepareNewBoard';
 import { isChecked } from '../utils/isChecked';
+import { getKing } from '../utils/getKing';
 
 const initialState = {
   gameId: null,
   player: null,
   socket: openSocket('http://localhost:3001'),
+  // socket: openSocket('https://reactive-chess.herokuapp.com/'),
   board: initializeBoard(),
   taken: {
     black: [],
@@ -54,9 +56,8 @@ const reducer = (state = initialState, action) => {
         } :
         state.taken;
 
-      const king = state.board.map((figure, index) => ({figure, index}))
-        .filter(square => square.figure && square.figure.player ===
-          (player === 'white' ? 'black' : 'white') && square.figure.name === 'King')[0];
+      const opponent = player === 'white' ? 'black' : 'white';
+      const king = getKing(state.board, opponent);
 
       return {
         ...state,
