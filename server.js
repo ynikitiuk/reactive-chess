@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const socketIo = require('socket.io');
 
 const app = express();
@@ -10,6 +11,13 @@ app.set('port', process.env.PORT || 3001);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build/index.html'), (err) => {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  });
 }
 
 io.on('connection', socket => {
@@ -34,8 +42,10 @@ io.on('connection', socket => {
 
   socket.on('disconnecting', () => {
     for (let room in socket.rooms) {
-      if (socket.rooms.hasOwnProperty(room)) {
-        io.sockets.in(room).emit('endGame', {})
+      io.sockets.in(room).emit('endGame', {});
+
+      for (let socketId in io.sockets.in(room).sockets) {
+        io.sockets.sockets[socketId].leave(room);
       }
     }
   });
